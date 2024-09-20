@@ -15,8 +15,9 @@
     "vite": "^5.4.1"
   },
   "dependencies": {
-    "lil-gui": "^0.19.2",
     "avrgirl-arduino": "^5.0.1",
+    "firmata-io": "^2.3.0",
+    "lil-gui": "^0.19.2",
     "vite-plugin-node-polyfills": "^0.22.0"
   }
 }
