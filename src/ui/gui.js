@@ -1,9 +1,9 @@
 import GUI from 'lil-gui'; 
-import handleStart from '../serial/handleStart';
+import init from '../init.js';
 const gui = new GUI();
 
 gui.add(window.location,'reload')
 
-gui.add({handleStart},'handleStart')
+gui.add({init},'init')
 
 export default gui

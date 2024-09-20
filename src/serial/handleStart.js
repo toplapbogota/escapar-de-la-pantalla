@@ -1,10 +1,10 @@
 import initFirmata from "../io/firmata"
 
-function handleStart() {
+function handleStart(onInit) {
   console.log('handleStart')
   try{
 
-    initFirmata()
+    initFirmata(onInit)
   }catch(err){
     console.log(err)
   }
