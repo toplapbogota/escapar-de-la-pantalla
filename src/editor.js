@@ -1,8 +1,11 @@
 import CodeMirror from 'codemirror-minified/lib/codemirror'
 import 'codemirror-minified/mode/javascript/javascript'
+import EventEmitter from 'events'
 
-export default class Editor {
+export default class Editor extends EventEmitter{
   constructor(parent) {
+    super()
+
     const opts = {
       mode: { name: 'javascript', globalVars: true },
       value: 'dosis',
@@ -21,11 +24,20 @@ export default class Editor {
     self=this
     return {
       'Ctrl-Enter': function(cm) {
-        var text = self.selectCurrentBlock(cm)
+        var text = self.selectLine(cm)
+        self.emit('eval',text)
         self.localStorageSave(cm);
       },      
     }
   }
+  selectLine(cm){
+    const line=cm.getLine(cm.getCursor().line);
+    let lastCode = cm.doc.getValue();
+    let stringToSave = JSON.stringify({code:lastCode})
+    localStorage.setItem(APP_NAME,stringToSave)
+    return line
+  }
+
   selectCurrentBlock (cm) { // thanks to graham wakefield + gibber
     var pos = cm.getCursor()
      var startline = pos.line
@@ -50,11 +62,6 @@ export default class Editor {
     }
     var str = cm.getRange(pos1, pos2)
     return str
-    return {
-      start: pos1,
-      end: pos2,
-      text: str
-    }
   }
   localStorageSave(cm) {
     let lastCode = cm.doc.getValue();
