@@ -13,5 +13,8 @@
   "devDependencies": {
     "gh-pages": "^6.1.1",
     "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "lil-gui": "^0.19.2"
   }
 }
