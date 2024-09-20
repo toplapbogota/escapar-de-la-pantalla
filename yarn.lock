@@ -673,6 +673,11 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==
 
+codemirror-minified@^5.65.9:
+  version "5.65.9"
+  resolved "https://registry.yarnpkg.com/codemirror-minified/-/codemirror-minified-5.65.9.tgz#44e441e89ac620992a5d159fc84a648673ac0cdc"
+  integrity sha512-r/+bwWqvEX0cRNZKZKXLNdy8Z8SdXdJARdhnD6GCpWZV9eglXO5VwEe4z+jVG1JGGsXZEitBs0p8ZcWhGrsNrw==
+
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
