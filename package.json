@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "avrgirl-arduino": "^5.0.1",
+    "browser-process-hrtime": "^1.0.0",
+    "events": "^3.3.0",
     "firmata-io": "^2.3.0",
     "johnny-five": "^2.1.0",
     "lil-gui": "^0.19.2",
