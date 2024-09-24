@@ -1,6 +1,6 @@
 function handleEval(codeText) {
   console.log('handleEval codeText: ', codeText);
-  eval(codeText)
+  window.eval(codeText)
 }
 
 export default handleEval;
