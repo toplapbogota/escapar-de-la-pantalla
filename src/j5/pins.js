@@ -5,17 +5,6 @@ let intervalo = 1000;
 let loopID = -1;
 
 
-export default function enablePins() {
-  {
-    for (let i = 0; i < 13; i++) {
-      var pin = new five.Pin({ pin: i, mode: 1 });
-      pines.push(pin);
-      pin.low();
-    }
-    console.log("pins.js: start!!!, pines", pines);
-  }
-}
-
 function prender(...pinesID) {
   console.log("pines : ", pinesID);
 
