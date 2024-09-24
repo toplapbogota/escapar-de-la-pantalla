@@ -13,6 +13,7 @@ function handleIOReady(io) {
     });
     board.on('ready', () => {
       console.log('johnny five in browser !!!!');
+      global.Servo = five.Servo;
     });
     board.on('error', console.error);
   }
