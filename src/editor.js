@@ -3,7 +3,7 @@ import 'codemirror-minified/mode/javascript/javascript'
 import EventEmitter from 'events'
 import { APP_NAME } from './constants'
 
-export default class Editor extends EventEmitter{
+export default class Editor extends EventEmitter {
   constructor(parent) {
     super()
 
@@ -11,37 +11,37 @@ export default class Editor extends EventEmitter{
       mode: { name: 'javascript', globalVars: true },
       value: 'dosis',
       theme: 'tomorrow-night-eighties',
-      extraKeys : this.extraKeys(),
-      
+      extraKeys: this.extraKeys(),
+
     }
     this.cm = CodeMirror.fromTextArea(parent, opts)
     window.cm = this.cm
     this.cm.refresh()
 
     this.cm.setValue('\n \n console.log("Escapar de la pantalla") \n\n toplap Bogotá ::  CTRL+enter')
-    
+
   }
-  extraKeys(){
-    self=this
+  extraKeys() {
+    self = this
     return {
-      'Ctrl-Enter': function(cm) {
+      'Ctrl-Enter': function (cm) {
         var text = self.selectLine(cm)
-        self.emit('eval',text)
+        self.emit('eval', text)
         self.localStorageSave(cm);
-      },      
+      },
     }
   }
-  selectLine(cm){
-    const line=cm.getLine(cm.getCursor().line);
+  selectLine(cm) {
+    const line = cm.getLine(cm.getCursor().line);
     let lastCode = cm.doc.getValue();
-    let stringToSave = JSON.stringify({code:lastCode})
-    localStorage.setItem(APP_NAME,stringToSave)
+    let stringToSave = JSON.stringify({ code: lastCode })
+    localStorage.setItem(APP_NAME, stringToSave)
     return line
   }
 
-  selectCurrentBlock (cm) { // thanks to graham wakefield + gibber
+  selectCurrentBlock(cm) { // thanks to graham wakefield + gibber
     var pos = cm.getCursor()
-     var startline = pos.line
+    var startline = pos.line
     var endline = pos.line
     var currentText = cm.getLine(startline).trim();
     while (startline > 0 && currentText !== '') {
@@ -49,7 +49,7 @@ export default class Editor extends EventEmitter{
       currentText = cm.getLine(startline).trim();
     }
     currentText = cm.getLine(endline).trim();
-    while (endline < cm.lineCount() &&  currentText!== '') {
+    while (endline < cm.lineCount() && currentText !== '') {
       endline++
       currentText = cm.getLine(endline).trim();
     }
@@ -66,7 +66,7 @@ export default class Editor extends EventEmitter{
   }
   localStorageSave(cm) {
     let lastCode = cm.doc.getValue();
-    let stringToSave = JSON.stringify({code:lastCode})
-    localStorage.setItem(APP_NAME,stringToSave)
+    let stringToSave = JSON.stringify({ code: lastCode })
+    localStorage.setItem(APP_NAME, stringToSave)
   }
 }
