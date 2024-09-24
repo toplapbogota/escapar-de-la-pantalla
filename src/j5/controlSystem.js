@@ -5,6 +5,7 @@ import enablePins from './pins';
 global.five = five
 
 function handleIOReady(io) {
+  return () => {
   console.log('handleIOReady')
   const board = global.board = new Board({ io, repl: false });
   board.on('message', (msg) => {
@@ -15,6 +16,7 @@ function handleIOReady(io) {
     enablePins()
   });
   board.on('error', console.error);
+  }
 }
 
 export default handleIOReady
