@@ -4,8 +4,8 @@ const pines = [];
 let contadorIndice = 0;
 let pines_global;
 let intervalo = 1000;
-let loopID = -1;
-let loopIds = [];
+let bucleID = -1;
+let bucleIds = [];
 
 
 function prender(...pinesID) {
@@ -33,25 +33,25 @@ function apagar(...pinesID) {
 
 global.apagar = apagar
 
-function onceArduino(...pinesID) {
-  checkPins(pinesID, 'loopArduino');
+function serie(...pinesID) {
+  checkPins(pinesID, 'bucleArduino');
   // let pines = pinsManager.j5Pins
-  loopID = setInterval(() => { doLoopPins(pinesID, true) }, intervalo);
-  loopIds.push(loopID);
+  bucleID = setInterval(() => { doBuclePins(pinesID, true) }, intervalo);
+  bucleIds.push(bucleID);
 }
 
-global.onceArduino = onceArduino;
+global.serie = serie;
 
 function cambiarIntervalo(argument) {
   intervalo = argument;
-  clearInterval(loopID);
-  loop();
+  clearInterval(bucleID);
+  bucle();
 }
 
 global.cambiarIntervalo = cambiarIntervalo;
 
-function loop(...pinesID) {
-  checkPins(pinesID, 'loopArduino');
+function bucle(...pinesID) {
+  checkPins(pinesID, 'bucleArduino');
   // let pines = pinsManager.j5Pins
   if (pinesID.length !== 0) {
     pines_global = pinesID;
@@ -61,71 +61,71 @@ function loop(...pinesID) {
   }
 
 
-  loopID = setInterval(() => { doLoopPins(pinesID) }, intervalo)
-  loopIds.push(loopID);
+  bucleID = setInterval(() => { doBuclePins(pinesID) }, intervalo)
+  bucleIds.push(bucleID);
 }
 
-global.loop = loop
+global.bucle = bucle
 
-function detenerLoop() {
-  clearInterval(loopID)
+function detenerBucle() {
+  clearInterval(bucleID)
 }
 
-global.detenerLoop = detenerLoop
+global.detenerBucle = detenerBucle
 
 function apagarTodo() {
   const pins = pinsManager.pins;
   console.log('apagarTodo : ', pins);
   pinsManager.stopAll();
-  clearInterval(loopID)
-  loopID = null;
-  loopIds.forEach(x => {
+  clearInterval(bucleID)
+  bucleID = null;
+  bucleIds.forEach(x => {
     clearInterval(x)
 
   })
   // apagarServos();
-  apagarPinesSimultaneos();
+  apagarPinesParalelo();
 }
 
-function apagarPinesSimultaneos() {
-  if (pinesSimultaneos) {
-    pinesSimultaneos.forEach(function (pin_object) {
+function apagarPinesParalelo() {
+  if (pinesParalelo) {
+    pinesParalelo.forEach(function (pin_object) {
       clearTimeout(pin_object.init_id)
       clearTimeout(pin_object.stop_id)
     })
-    pinesSimultaneos.length = 0;
+    pinesParalelo.length = 0;
   }
 }
 
 global.apagarTodo = apagarTodo
 
-let pinesSimultaneos;
+let pinesParalelo;
 /**
  * 
- * @param  {...any} pinesData a list of {pin,start,lapse} objects
+ * @param  {...any} pinesData a list of {pin,inicio,lapso} objects
  */
-function simultaneos(...pinesData) {
-  apagarPinesSimultaneos();
+function paralelo(...pinesData) {
+  apagarPinesParalelo();
   //console.log("PinesData : ",PinesData);
   var pinesIds = pinesData.map(pinDatum => pinDatum.pin);
   let fivePins = checkPins(pinesIds, 'sameTime');
   // return;
-  pinesSimultaneos = pinesData;
+  pinesParalelo = pinesData;
   for (var i = 0; i < pinesData.length; i++) {
     let pinId = pinesData[i].pin;
     pinesData[i].id = i;
     pinesData[i].fivePin = pinsManager.getPinById(pinId);
     pinesData[i].ciclo = function () {
       this.init_id = setTimeout(() => {
-        console.log('start', this.pin);
+        console.log('inicio', this.pin);
         this.fivePin.high();
         this.stop_id = setTimeout(() => {
           console.log('stop', this.pin);
           this.fivePin.low();
-          pinesSimultaneos[this.id].ciclo();
+          pinesParalelo[this.id].ciclo();
         },
-          this.lapse * 1000)
-      }, this.start * 1000)
+          this.lapso * 1000)
+      }, this.inicio * 1000)
     }
     pinesData[i].ciclo();
 
@@ -133,10 +133,10 @@ function simultaneos(...pinesData) {
 
 }
 
-global.simultaneos = simultaneos
+global.paralelo = paralelo
 
 
-function doLoopPins(pinesID, isOnce = false) {
+function doBuclePins(pinesID, isOnce = false) {
 
   console.log('-------------------------------')
   let currentId = pinesID[contadorIndice];
@@ -159,7 +159,7 @@ function doLoopPins(pinesID, isOnce = false) {
 
   if (contadorIndice >= pinesID.length) {
     contadorIndice = 0;
-    if (isOnce) clearInterval(loopID);
+    if (isOnce) clearInterval(bucleID);
   }
 
 
